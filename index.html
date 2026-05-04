@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nhân Gian — Đá tự nhiên thủ công</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F7F4EE;
+      --warm-white: #FDFBF7;
+      --stone: #9B8E80;
+      --stone-light: #C8BFB4;
+      --stone-dark: #5C5248;
+      --amethyst: #8A6FAC;
+      --aqua: #6B9BAD;
+      --text: #2A2420;
+      --text-muted: #7A716A;
+      --border: rgba(155,142,128,0.2);
+      --border-hover: rgba(155,142,128,0.5);
+      --r: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--warm-white);
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .brand-tagline {
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-top: 6px;
+      font-weight: 400;
+    }
+
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin: 16px 0 0;
+    }
+    .ornament-line { flex: 0 0 56px; height: 1px; background: var(--stone-light); }
+    .ornament-gem {
+      width: 8px; height: 8px;
+      background: var(--amethyst);
+      transform: rotate(45deg);
+      opacity: 0.6;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding: 1.2rem 1rem 0;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 7px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .nav-btn:hover { border-color: var(--border-hover); color: var(--text); }
+    .nav-btn.active {
+      background: var(--text);
+      color: var(--cream);
+      border-color: var(--text);
+    }
+
+    /* ── MAIN ── */
+    main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    /* ── PRODUCT CARD ── */
+    .card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.3s, transform 0.3s;
+      animation: fadeUp 0.5s ease both;
+    }
+    .card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card:nth-child(1) { animation-delay: 0.05s; }
+    .card:nth-child(2) { animation-delay: 0.12s; }
+    .card:nth-child(3) { animation-delay: 0.19s; }
+    .card:nth-child(4) { animation-delay: 0.26s; }
+
+    .card-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Stone illustration placeholder */
+    .stone-art {
+      width: 90px;
+      height: 90px;
+      opacity: 0.45;
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+    .badge-amethyst { background: #EDE7F6; color: #6A3FA0; }
+    .badge-aqua     { background: #E1F0F5; color: #2E7A8E; }
+
+    .card-body { padding: 16px 18px 18px; }
+
+    .card-type {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: 5px;
+    }
+
+    .card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 14px;
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .card-stones {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .stone-tag {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-hover);
+      color: var(--stone-dark);
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .order-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--text);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .order-btn:hover { background: var(--text); color: var(--cream); }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(42,36,32,0.55);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--warm-white);
+      border-radius: var(--r);
+      max-width: 520px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 0;
+      position: relative;
+      animation: modalIn 0.25s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.96) translateY(10px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px; right: 14px;
+      background: rgba(253,251,247,0.85);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      color: var(--stone);
+      cursor: pointer;
+      z-index: 10;
+      line-height: 1;
+    }
+    .modal-close:hover { color: var(--text); background: var(--warm-white); }
+
+    /* ── GALLERY ── */
+    .gallery {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: var(--cream);
+      border-radius: var(--r) var(--r) 0 0;
+      overflow: hidden;
+    }
+
+    .gallery-track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .gallery-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--cream);
+    }
+
+    .gallery-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-slide .stone-art-lg {
+      width: 120px;
+      height: 120px;
+      opacity: 0.4;
+    }
+
+    .gallery-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(253,251,247,0.9);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      font-size: 14px;
+      color: var(--stone-dark);
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .gallery-arrow:hover { background: var(--warm-white); color: var(--text); border-color: var(--border-hover); }
+    .gallery-arrow.prev { left: 10px; }
+    .gallery-arrow.next { right: 10px; }
+    .gallery-arrow.hidden { opacity: 0; pointer-events: none; }
+
+    .gallery-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 5px;
+    }
+    .gallery-dot {
+      width: 6px; height: 6px;
+      border-radius: 999px;
+      background: rgba(92,82,72,0.3);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .gallery-dot.active {
+      background: var(--stone-dark);
+      width: 16px;
+    }
+
+    .gallery-counter {
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--stone);
+      background: rgba(253,251,247,0.8);
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    /* ── MODAL BODY ── */
+    .modal-body { padding: 18px 20px 22px; }
+
+    .modal-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .modal-type {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: 14px;
+    }
+    .modal-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 14px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+    }
+    .modal-stones { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+
+    .modal-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .modal-order-btn {
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 13px;
+      border-radius: 999px;
+      border: 1px solid var(--text);
+      background: var(--text);
+      color: var(--cream);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .modal-order-btn:hover { background: var(--stone-dark); border-color: var(--stone-dark); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+    footer p { font-size: 12px; color: var(--stone); letter-spacing: 0.1em; }
+    footer a {
+      font-size: 12px;
+      color: var(--stone-dark);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      margin-top: 6px;
+      display: inline-block;
+    }
+    footer a:hover { color: var(--text); text-decoration: underline; }
+
+    @media (max-width: 480px) {
+      .grid { grid-template-columns: 1fr; }
+      .modal { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand-name">Nhân Gian</div>
+  <div class="brand-tagline">Handmade Natural Stone Jewelry · Đá tự nhiên thủ công</div>
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-gem"></div>
+    <div class="ornament-line"></div>
+  </div>
+  <nav>
+    <button class="nav-btn active" onclick="filterProducts('all', this)">Tất cả</button>
+    <button class="nav-btn" onclick="filterProducts('keychain', this)">Móc khóa</button>
+    <button class="nav-btn" onclick="filterProducts('bracelet', this)">Vòng tay</button>
+  </nav>
+</header>
+
+<main>
+  <div class="section-title" id="section-label">Bộ sưu tập</div>
+  <div class="grid" id="product-grid"></div>
+</main>
+
+<footer>
+  <p>© 2025 Nhân Gian · Mỗi sản phẩm là một lời chúc</p>
+  <a href="https://m.me/nhangian" target="_blank">Liên hệ đặt hàng →</a>
+</footer>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+
+    <!-- Gallery -->
+    <div class="gallery" id="modal-gallery">
+      <div class="gallery-track" id="gallery-track"></div>
+      <button class="gallery-arrow prev hidden" id="gallery-prev" onclick="galleryMove(-1)">&#8592;</button>
+      <button class="gallery-arrow next hidden" id="gallery-next" onclick="galleryMove(1)">&#8594;</button>
+      <div class="gallery-dots" id="gallery-dots"></div>
+      <div class="gallery-counter" id="gallery-counter"></div>
+    </div>
+
+    <!-- Info -->
+    <div class="modal-body">
+      <div class="modal-type" id="modal-type"></div>
+      <div class="modal-name" id="modal-name"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-stones" id="modal-stones"></div>
+      <div class="modal-price" id="modal-price"></div>
+      <button class="modal-order-btn" id="modal-order-btn">Nhắn tin đặt hàng →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const products = [
+    {
+      id: 1,
+      name: "Thanh",
+      type: "keychain",
+      typeLabel: "Móc khóa",
+      shortDesc: "Bình tĩnh và vững vàng hơn trong từng ngày.",
+      fullDesc: "Móc khóa từ hợp kim mạ bạc, kết hợp đá aquamarine và celestine cùng charm cỏ bốn lá. Celestine mang cảm giác nhẹ và cân bằng. Aquamarine gắn với sự bình tĩnh và rõ ràng, hỗ trợ giao tiếp và tự tin. Cỏ bốn lá là lời chúc may mắn. Bảo quản nơi khô ráo, hạn chế tiếp xúc nước và hoá chất.",
+      stones: ["Aquamarine", "Celestine", "Hợp kim mạ bạc"],
+      price: 119000,
+      badge: "Aquamarine · Celestine",
+      badgeClass: "badge-aqua",
+      accentColor: "#6B9BAD",
+      // 👉 THAY ĐƯỜNG DẪN ẢNH Ở ĐÂY — ví dụ: "images/thanh-1.jpg"
+      images: [
+        { type: "url", src: "images/thanh-1.jpg"},
+        { type: "url", src: "images/cam_ket.jpg"},
+
+      ],
+    },
+    {
+      id: 2,
+      name: "Lặng",
+      type: "keychain",
+      typeLabel: "Móc khóa",
+      shortDesc: "Một chút bình tĩnh và tin tưởng vào chính mình.",
+      fullDesc: "Móc khóa từ hợp kim mạ bạc, kết hợp đá amethyst và charm cỏ bốn lá. Amethyst gắn với sự cân bằng và thư giãn, giúp tâm trí dịu lại trong những giai đoạn căng thẳng. Mang theo bên mình hoặc đặt trên bàn học như một lời nhắc nhẹ. Bảo quản nơi khô ráo, hạn chế tiếp xúc nước và hoá chất.",
+      stones: ["Amethyst", "Hợp kim mạ bạc"],
+      price: 99000,
+      badge: "Amethyst",
+      badgeClass: "badge-amethyst",
+      accentColor: "#8A6FAC",
+      // 👉 THAY ĐƯỜNG DẪN ẢNH Ở ĐÂY — ví dụ: "images/lang-1.jpg"
+      images: [
+        { type: "url", src: "images/lang-1.jpg" },
+        { type: "url", src: "images/lang-2.jpg" },
+        { type: "url", src: "images/cam_ket.jpg" },
+      ],
+    },
+  ];
+
+  let currentFilter = 'all';
+  let galleryIndex = 0;
+  let galleryTotal = 0;
+
+  function stoneIllustration(color, size = 90) {
+    return `<svg style="width:${size}px;height:${size}px;opacity:0.4" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="45,6 80,26 80,64 45,84 10,64 10,26" fill="${color}" opacity="0.18"/>
+      <polygon points="45,6 68,20 45,32 22,20" fill="${color}" opacity="0.28"/>
+      <polygon points="45,32 68,20 80,26 66,48" fill="${color}" opacity="0.22"/>
+      <polygon points="45,32 22,20 10,26 24,48" fill="${color}" opacity="0.18"/>
+      <polygon points="45,84 66,48 80,64" fill="${color}" opacity="0.14"/>
+      <polygon points="45,84 24,48 10,64" fill="${color}" opacity="0.12"/>
+      <polygon points="45,32 66,48 45,84 24,48" fill="${color}" opacity="0.1"/>
+      <circle cx="45" cy="30" r="4" fill="${color}" opacity="0.35"/>
+    </svg>`;
+  }
+
+  function slideHTML(img) {
+    if (img.type === 'placeholder') {
+      return `<div class="gallery-slide">${stoneIllustration(img.color, 120)}</div>`;
+    }
+    return `<div class="gallery-slide"><img src="${img.src}" alt="product" /></div>`;
+  }
+
+  function formatPrice(n) {
+    return n.toLocaleString('vi-VN') + ' ₫';
+  }
+
+  function renderProducts(filter) {
+    const grid = document.getElementById('product-grid');
+    const label = document.getElementById('section-label');
+    const filtered = filter === 'all' ? products : products.filter(p => p.type === filter);
+    label.textContent = filter === 'all' ? 'Bộ sưu tập' : (filter === 'keychain' ? 'Móc khóa' : 'Vòng tay');
+
+    grid.innerHTML = filtered.map(p => `
+      <div class="card" onclick="openModal(${p.id})">
+        <div class="card-img">
+          ${stoneIllustration(p.accentColor)}
+          <div class="card-badge ${p.badgeClass}">${p.badge}</div>
+        </div>
+        <div class="card-body">
+          <div class="card-type">${p.typeLabel}</div>
+          <div class="card-name">${p.name}</div>
+          <div class="card-desc">"${p.shortDesc}"</div>
+          <div class="card-stones">
+            ${p.stones.map(s => `<span class="stone-tag">${s}</span>`).join('')}
+          </div>
+          <div class="card-footer">
+            <div class="card-price">${formatPrice(p.price)}</div>
+            <button class="order-btn" onclick="event.stopPropagation(); openModal(${p.id})">Xem thêm</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function filterProducts(type, btn) {
+    currentFilter = type;
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderProducts(type);
+  }
+
+  function updateGalleryUI() {
+    document.getElementById('gallery-track').style.transform = `translateX(-${galleryIndex * 100}%)`;
+    document.getElementById('gallery-counter').textContent = `${galleryIndex + 1} / ${galleryTotal}`;
+
+    const dots = document.querySelectorAll('.gallery-dot');
+    dots.forEach((d, i) => d.classList.toggle('active', i === galleryIndex));
+
+    document.getElementById('gallery-prev').classList.toggle('hidden', galleryIndex === 0);
+    document.getElementById('gallery-next').classList.toggle('hidden', galleryIndex === galleryTotal - 1);
+  }
+
+  function galleryMove(dir) {
+    galleryIndex = Math.min(Math.max(galleryIndex + dir, 0), galleryTotal - 1);
+    updateGalleryUI();
+  }
+
+  function openModal(id) {
+    const p = products.find(x => x.id === id);
+    galleryIndex = 0;
+    galleryTotal = p.images.length;
+
+    // Build slides
+    document.getElementById('gallery-track').innerHTML = p.images.map(slideHTML).join('');
+
+    // Build dots
+    document.getElementById('gallery-dots').innerHTML = p.images.map((_, i) =>
+      `<div class="gallery-dot${i === 0 ? ' active' : ''}" onclick="galleryIndex=${i}; updateGalleryUI()"></div>`
+    ).join('');
+
+    // Hide dots if only 1 image
+    document.getElementById('gallery-dots').style.display = galleryTotal <= 1 ? 'none' : 'flex';
+    document.getElementById('gallery-counter').style.display = galleryTotal <= 1 ? 'none' : 'block';
+
+    updateGalleryUI();
+
+    document.getElementById('modal-type').textContent = p.typeLabel;
+    document.getElementById('modal-name').textContent = p.name;
+    document.getElementById('modal-desc').textContent = p.fullDesc;
+    document.getElementById('modal-price').textContent = formatPrice(p.price);
+    document.getElementById('modal-stones').innerHTML = p.stones.map(s => `<span class="stone-tag">${s}</span>`).join('');
+    document.getElementById('modal-order-btn').onclick = () => {
+      window.open('https://m.me/nhangian?text=Mình muốn đặt ' + encodeURIComponent(p.name), '_blank');
+    };
+    document.getElementById('modal-overlay').classList.add('open');
+  }
+
+  function closeModal(e) {
+    if (e.target === document.getElementById('modal-overlay')) {
+      document.getElementById('modal-overlay').classList.remove('open');
+    }
+  }
+
+  function closeModalDirect() {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+
+  // Swipe support for mobile
+  let touchStartX = 0;
+  document.getElementById('modal-gallery').addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  document.getElementById('modal-gallery').addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) galleryMove(diff > 0 ? 1 : -1);
+  });
+
+  renderProducts('all');
+</script>
+</body>
+</html>
